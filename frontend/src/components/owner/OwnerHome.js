@@ -392,29 +392,29 @@ const OwnerHome = () => {
         {empList.length>0 && (<div className="table-responsive">
           <h4 className="mb-3">Employee Details</h4>
               <div className="" style={{ maxHeight: '500px', overflowX: 'auto' }}>
-                <table ref={tableRef} className="table table-responsive table-striped table-hover table-light border-dark text-center">
+                <table ref={tableRef} className="table table-responsive table-striped table-hover table-light border-dark text-center" style={{ tableLayout: "fixed", width: "100%" }}>
                   {/* Sticky Table Header */}
                   <thead className="table-primary" style={{ position: 'sticky', top: 0 ,zIndex: 2 }}>
                     <tr>
-                      <th>Name</th>
-                      <th>ID</th>
-                      <th>Cluster</th>
-                      <th>Service Center</th>
-                      <th>Daily Wage</th>
-                      <th>No of Days Present</th>
-                      <th>Total Wages</th>
-                      <th>Basic</th>
-                      <th>Others</th>
-                      <th>Gross Wages</th>
-                      <th>PF</th>
-                      <th>ESIC</th>
-                      <th>Net Wages</th>
-                      <th>PF Emper</th>
-                      <th>ESIC Emp</th>
-                      <th>Total Cost</th>
-                      <th>Service Charge</th>
-                      <th>Total Charges</th>
-                      <th className="sticky-col" style={{ position: 'sticky', right: 0}}>Profile</th> {/* Sticky last column */}
+                      <th style={{ width: "150px" }}>Name</th>
+                      <th style={{ width: "150px" }}>ID</th>
+                      <th style={{ width: "150px" }}>Cluster</th>
+                      <th style={{ width: "150px" }}>Service Center</th>
+                      <th style={{ width: "150px" }}>Daily Wage</th>
+                      <th style={{ width: "150px" }}>No of Days Present</th>
+                      <th style={{ width: "150px" }}>Total Wages</th>
+                      <th style={{ width: "150px" }}>Basic</th>
+                      <th style={{ width: "150px" }}>Others</th>
+                      <th style={{ width: "150px" }}>Gross Wages</th>
+                      <th style={{ width: "150px" }}>PF</th>
+                      <th style={{ width: "150px" }}>ESIC</th>
+                      <th style={{ width: "150px" }}>Net Wages</th>
+                      <th style={{ width: "150px" }}>PF Emper</th>
+                      <th style={{ width: "150px" }}>ESIC Emp</th>
+                      <th style={{ width: "150px" }}>Total Cost</th>
+                      <th style={{ width: "150px" }}>Service Charge</th>
+                      <th style={{ width: "150px" }}>Total Charges</th>
+                      <th className="sticky-col" style={{ position: 'sticky', right: 0, width: "150px"}}>Profile</th> {/* Sticky last column */}
                     </tr>
                   </thead>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { act, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as XLSX from "xlsx"; // Import xlsx library
@@ -41,57 +41,6 @@ const AdminHome = () => {
     navigate("/");
   };
 
-  async function handleFileUpload() {
-    if (!file){
-      alert("Please select a file");
-      return;
-    } 
-  
-    const reader = new FileReader();
-  
-    reader.onload = async (e) => {
-      try {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
-  
-        // Read the first sheet
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-  
-        // Convert sheet to array (first row as header)
-        const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-  
-        if (rows.length < 2) {
-          console.warn("Empty or invalid file structure.");
-          return;
-        }
-  
-        // Extract headers from the first row
-        const headers = rows[0];
-  
-        // Map rows to objects using headers as keys
-        const formattedData = rows.slice(1).map((row) => {
-          let obj = {};
-          headers.forEach((key, index) => {
-            obj[key] = row[index] || "";
-          });
-          obj['status']="Active";
-          return obj;
-        });
-  
-        // Send data to the API
-        const result = await axios.post(
-          "http://localhost:4000/admin-api/employees",
-          formattedData
-        );
-        alert( result.data.message);
-      } catch (error) {
-        console.error("Error processing file:", error);
-      }
-    };
-  
-    reader.readAsArrayBuffer(file);
-  }
   
 
   const renderContent = () => {
@@ -131,7 +80,7 @@ const AdminHome = () => {
         </form>
       );
     }
-    if (activeTab === "owners") {
+    if(activeTab==="owners"){
       getOwners();
       return (
         <div className="table-responsive-sm">
@@ -165,25 +114,7 @@ const AdminHome = () => {
         </div>
       );
     }
-    if (activeTab === "upload") {
-      return (
-      <div className="d-flex justify-content-center align-items-center vh-100" >
-      <div className="border border-dashed p-5 text-center bg-light rounded shadow" style={{ width: "50%", minHeight: "200px" }}>
-        <h4 className="mb-3">Upload File</h4>
-        <label className="btn btn-danger btn-lg d-block mx-auto rounded-pill px-5 py-3" style={{ cursor: "pointer" }}>
-          Select File
-          <input
-            type="file"
-            accept=".xlsx, .xls"
-            onChange={handleFileChange}
-            className="d-none"
-          />
-        </label>
-        <button className="btn btn-primary" onClick={handleFileUpload}>Upload</button>
-      </div>
-    </div>
-      );
-    }
+
   };
 
   return (
@@ -214,7 +145,12 @@ const AdminHome = () => {
                 <button className={`nav-link btn ${activeTab === "owners" ? "active" : ""}`} onClick={() => setActiveTab("owners")}>Owners</button>
               </li>
               <li className="nav-item">
-                <button className={`nav-link btn ${activeTab === "upload" ? "active" : ""}`} onClick={() => setActiveTab("upload")}>Upload Excel</button>
+                <button
+                  className={`nav-link btn ${activeTab === 'registration' ? 'active' : ''}`}
+                  onClick={() => navigate('/employeeRegistration')}
+                >
+                  Employee Registration
+                </button>
               </li>
             </ul>
             <button className="btn btn-danger" onClick={handleLogout}>Logout</button>

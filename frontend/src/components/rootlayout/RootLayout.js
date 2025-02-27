@@ -57,10 +57,8 @@ const RootLayout = () => {
       </nav>
 
       {/* Main Content */}
-      <main className="container flex-grow-1 mb-4">
-        <div className="  p-4">
+      <main className=" flex-grow-1 mb-4">
           <Outlet />
-        </div>
       </main>
 
       {/* Footer */}

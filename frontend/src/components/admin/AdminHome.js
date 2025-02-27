@@ -167,17 +167,21 @@ const AdminHome = () => {
     }
     if (activeTab === "upload") {
       return (
-        <div>
-          <h4>Upload Excel File</h4>
-          <input type="file" accept=".xlsx, .xls" onChange={handleFileChange}/>
-          <button  onClick={handleFileUpload}>Upload</button>
-          {/* {jsonData && (
-            <div className="mt-3">
-              <h5>Converted JSON Data:</h5>
-              <pre>{JSON.stringify(jsonData, null, 2)}</pre>
-            </div>
-          )} */}
-        </div>
+      <div className="d-flex justify-content-center align-items-center vh-100" >
+      <div className="border border-dashed p-5 text-center bg-light rounded shadow" style={{ width: "50%", minHeight: "200px" }}>
+        <h4 className="mb-3">Upload File</h4>
+        <label className="btn btn-danger btn-lg d-block mx-auto rounded-pill px-5 py-3" style={{ cursor: "pointer" }}>
+          Select File
+          <input
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={handleFileChange}
+            className="d-none"
+          />
+        </label>
+        <button className="btn btn-primary" onClick={handleFileUpload}>Upload</button>
+      </div>
+    </div>
       );
     }
   };

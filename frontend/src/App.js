@@ -11,9 +11,13 @@ import AdminHome from './components/admin/AdminHome';
 import OwnerHome from './components/owner/OwnerHome'
 import EmployeeProfile from './components/Employee/EmployeeProfile';
 import EmployeeRegistration from './components/Employee/EmployeeRegistration';
+import Header from './components/rootlayout/Header';
+import Footer from './components/rootlayout/Footer';
 
 function App() {
   return (
+    <div>
+      <Header/>
     <Router>
       <Routes>
         <Route path="/" element={<RootLayout />}>
@@ -31,6 +35,8 @@ function App() {
         
       </Routes>
     </Router>
+    <Footer/>
+    </div>
   );
 }
 

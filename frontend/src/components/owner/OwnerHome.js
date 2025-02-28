@@ -1,5 +1,5 @@
 import React, { useState, useEffect ,useRef} from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -359,8 +359,8 @@ const OwnerHome = () => {
   };
 
   return (
-    <div className="p-5 pt-1 bg-secondary bg-opacity-25">
-      <nav className="navbar navbar-expand-lg navbar-light m-0">
+    <div className="  bg-opacity-25 ">
+      <nav className="navbar navbar-expand-lg navbar-light m-0 p-0">
         <div className="container-fluid text-dark">
           <a className="navbar-brand" href="#!">Owner Panel</a>
           <button
@@ -433,7 +433,7 @@ const OwnerHome = () => {
           </div>
         </div>
       </nav>
-      <div className="dynamic-content m-0 rounded-0">{renderContent()}</div>
+      <div className="dynamic-content bg-secondary bg-opacity-25 min-vh-100 m-0 p-0">{renderContent()}</div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { act, useState } from "react";
+import React, { act, useState ,useEffect} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as XLSX from "xlsx"; // Import xlsx library
@@ -11,11 +11,32 @@ const AdminHome = () => {
   const { register, handleSubmit, reset } = useForm();
   const [msg, setMsg] = useState("");
   const [ownersList, setOwnersList] = useState([]);
-  const [file, setFile] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+
+  // Close sidebar when clicking outside on small screens
+  useEffect(() => {
+    const handleResize = () => {
+      const largeScreen = window.innerWidth >= 992;
+      setIsLargeScreen(largeScreen);
+      
+      // If transitioning to large screen, ensure sidebar is open
+      if (largeScreen) {
+        setIsSidebarOpen(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Check on initial load
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleOverlayClick = () => {
+    if (!isLargeScreen) {
+      setIsSidebarOpen(false);
+    }
   };
   // Handle form submission
   async function onRegistration(ownerObj) {
@@ -45,7 +66,7 @@ const AdminHome = () => {
 
   const renderContent = () => {
     if (activeTab === "dashboard") {
-      return <h2>Welcome to the Admin Dashboard!</h2>;
+      return <h2 className="ml-5">Welcome to the Admin Dashboard!</h2>;
     }
     if (activeTab === "registration") {
       return (
@@ -104,47 +125,110 @@ const AdminHome = () => {
   };
 
   return (
-    <div className="">
-      <nav className="navbar navbar-expand-lg navbar-light">
-        <div className="container-fluid text-dark">
-          <a className="navbar-brand" href="#!">Admin Panel</a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <button className={`nav-link btn ${activeTab === "dashboard" ? "active" : ""}`} onClick={() => setActiveTab("dashboard")}>Dashboard</button>
-              </li>
-              <li className="nav-item">
-                <button className={`nav-link btn ${activeTab === "registration" ? "active" : ""}`} onClick={() => setActiveTab("registration")}>Registration</button>
-              </li>
-              <li className="nav-item">
-                <button className={`nav-link btn ${activeTab === "owners" ? "active" : ""}`} onClick={() => setActiveTab("owners")}>Owners</button>
-              </li>
-              <li className="nav-item">
-                <button
-                  className={`nav-link btn ${activeTab === 'registration' ? 'active' : ''}`}
-                  onClick={() => navigate('/employeeRegistration')}
-                >
-                  Employee Registration
-                </button>
-              </li>
-            </ul>
-            <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
-          </div>
-        </div>
-      </nav>
+    <div className="d-flex position-relative" style={{ minHeight: 'calc(100vh - 120px)' }}>
+      {/* Toggle Button - only visible on small screens when sidebar is closed */}
+      {!isLargeScreen && !isSidebarOpen && (
+        <button
+          className="btn btn-light position-absolute m-2"
+          onClick={() => setIsSidebarOpen(true)}
+          style={{ zIndex: 1100 }}
+          aria-label="Open navigation"
+        >
+          ☰
+        </button>
+      )}
 
-      <div className="dynamic-content min-vh-100">{renderContent()}</div>
+      {/* Overlay for mobile - closes sidebar when clicking outside */}
+      {isSidebarOpen && !isLargeScreen && (
+        <div 
+          className="position-fixed" 
+          style={{ 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0, 
+            backgroundColor: 'rgba(0,0,0,0.4)', 
+            zIndex: 900 
+          }}
+          onClick={handleOverlayClick}
+        />
+      )}
+
+      {/* Sidebar - fixed height to fit between existing header and footer */}
+      <div
+        id="sidebar"
+        className={`bg-light shadow ${isLargeScreen ? 'd-block' : 'd-block position-fixed'}`}
+        style={{
+          width: '300px',
+          height: isLargeScreen ? '100%' : '100vh',
+          zIndex: 1000,
+          top: isLargeScreen ? 'auto' : '0',
+          left: 0,
+          transition: 'transform 0.3s ease-in-out',
+          transform: isSidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
+          overflowY: 'auto'
+        }}
+      >
+        <div className="p-3 d-flex flex-column min-vh-100">
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h4 className="text-dark m-0">Admin Panel</h4>
+            
+            {/* Close Button - only visible on small screens when sidebar is open */}
+            {!isLargeScreen && (
+              <button
+                className="btn btn-sm btn-outline-dark"
+                onClick={() => setIsSidebarOpen(false)}
+                aria-label="Close navigation"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          
+          <div className="mb-auto">
+            <button
+              className={`btn text-start w-100 mb-2 ${activeTab === "dashboard" ? "btn-primary" : "btn-light"}`}
+              onClick={() => setActiveTab("dashboard")}
+            >
+              Dashboard
+            </button>
+            <button
+              className={`btn text-start w-100 mb-2 ${activeTab === "registration" ? "btn-primary" : "btn-light"}`}
+              onClick={() => setActiveTab("registration")}
+            >
+              Registration
+            </button>
+            <button
+              className={`btn text-start w-100 mb-2 ${activeTab === "owners" ? "btn-primary" : "btn-light"}`}
+              onClick={() => setActiveTab("owners")}
+            >
+              Owners
+            </button>
+            <button
+              className={`btn text-start w-100 mb-2 ${activeTab === "employeeRegistration" ? "btn-primary" : "btn-light"}`}
+              onClick={() => navigate("/employeeRegistration")}
+            >
+              Employee Registration
+            </button>
+          </div>
+          
+          <button className="btn btn-danger mt-auto" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div 
+        className="flex-grow-1 p-4" 
+        style={{ 
+          marginLeft: isLargeScreen ? '300px' : '10px',
+          width: isLargeScreen ? 'calc(100% - 250px)' : '100%',
+          transition: 'margin 0.3s ease-in-out'
+        }}
+      >
+        {renderContent()}
+      </div>
     </div>
   );
 };

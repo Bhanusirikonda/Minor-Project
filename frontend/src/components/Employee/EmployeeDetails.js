@@ -141,8 +141,17 @@ function EmployeeDetails() {
     };
 
   return (
-    <div className="container p-4 min-vh-75">
-        <h2 className='text-center p-2 mb-3'>Employee Details</h2>
+    <div className="container p-4 min-vh-100">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+             <h2 className="text-center mb-4">Employee Details </h2>
+            
+              <button
+                className="btn btn-danger"
+                onClick={() => navigate(-1)}
+              >
+                ✕
+              </button>
+          </div>
           <form onSubmit={detailsForm.handleSubmit(fetchEmployees)} >
             <div className="row g-3 align-items-center">
               <div className="col-md-3">
@@ -207,7 +216,7 @@ function EmployeeDetails() {
               
             </div>
 
-            <div className="text-center mt-3">
+            <div className="text-center mt-5">
               <button type="submit" className="btn btn-primary">Fetch Details</button>
             </div>
          </form>

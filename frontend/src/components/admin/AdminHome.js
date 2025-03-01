@@ -211,6 +211,12 @@ const AdminHome = () => {
             >
               Employee Registration
             </button>
+            <button
+              className={`btn text-start w-100 mb-2 ${activeTab === "employeeDetails" ? "btn-primary" : "btn-light"}`}
+              onClick={() => navigate("/employeeDetails")}
+            >
+              Employee Details
+            </button>
           </div>
           
           <button className="btn btn-danger mt-auto" onClick={handleLogout}>

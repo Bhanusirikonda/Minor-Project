@@ -11,6 +11,7 @@ import AdminHome from './components/admin/AdminHome';
 import OwnerHome from './components/owner/OwnerHome'
 import EmployeeProfile from './components/Employee/EmployeeProfile';
 import EmployeeRegistration from './components/Employee/EmployeeRegistration';
+import EmployeeDetails from './components/Employee/EmployeeDetails';
 import Header from './components/rootlayout/Header';
 import Footer from './components/rootlayout/Footer';
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="ownerHome" element={<OwnerHome/>}>
         </Route>
         <Route path="employeeRegistration" element={<EmployeeRegistration/>} />
+        <Route path="employeeDetails" element={<EmployeeDetails/>} />
         <Route path="operatorHome" element={<OperatorHome/>}/>
         <Route path="employee/:id" element={<EmployeeProfile/>}/>
         

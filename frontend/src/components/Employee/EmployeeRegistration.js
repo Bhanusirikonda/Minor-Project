@@ -100,7 +100,7 @@ const EmployeeRegistration = () => {
           "http://localhost:4000/admin-api/employees",
           formattedData
         );
-        alert( result.data.message);
+        alert(result.data.message);
       } catch (error) {
         console.error("Error processing file:", error);
       }

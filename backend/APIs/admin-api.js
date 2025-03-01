@@ -39,7 +39,6 @@ adminApp.get('/owners',expressAsyncHandler(async(req,res)=>{
 
 adminApp.post('/employees',expressAsyncHandler(async(req,res)=>{
     let obj=req.body
-    console.log(obj)
     let result = await empCollection.insertMany(obj)
     console.log(result)
     if(result.acknowledged===true){

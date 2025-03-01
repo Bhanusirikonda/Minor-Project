@@ -37,14 +37,37 @@ adminApp.get('/owners',expressAsyncHandler(async(req,res)=>{
     res.send({message :"All owners are", payload:ownerList})
 }))
 
-adminApp.post('/employees',expressAsyncHandler(async(req,res)=>{
-    let obj=req.body
-    let result = await empCollection.insertMany(obj)
-    console.log(result)
-    if(result.acknowledged===true){
-        res.send({message:"Employees data Insertion Successful"});
-    }else{
-        res.send({message:"Error in uploading details"})
+adminApp.post('/employees', expressAsyncHandler(async (req, res) => {
+    try {
+        const employees = req.body;
+
+        // Process employees using map() and Promise.all()
+        const results = await Promise.all(employees.map(async (employee) => {
+            const existingEmployee = await empCollection.findOne({ id: employee.id });
+
+            if (!existingEmployee) {
+                await empCollection.insertOne(employee);
+                return "inserted";
+            } else {
+                return "ignored";
+            }
+        }));
+
+        // Count inserted and ignored employees
+        const insertedCount = results.filter(status => status === "inserted").length;
+        const ignoredCount = results.filter(status => status === "ignored").length;
+
+        res.status(201).send({
+            message: "Employee data processed successfully ",
+            inserted: insertedCount,
+            ignored: ignoredCount,
+        });
+
+    } catch (error) {
+        console.error("Error processing employees:", error);
+        res.status(500).send({ message: "Internal server error", error: error.message });
     }
-}))
+}));
+
+
 module.exports=adminApp

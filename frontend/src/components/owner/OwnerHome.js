@@ -8,6 +8,7 @@ import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { User, UserCircle } from "lucide-react";
 
 const OwnerHome = () => {
   const data={
@@ -360,7 +361,7 @@ const OwnerHome = () => {
 
   return (
     <div className="  bg-opacity-25 ">
-      <nav className="navbar navbar-expand-lg navbar-light m-0 p-0">
+      <nav className="navbar navbar-expand-lg navbar-light m-0 pr-3">
         <div className="container-fluid text-dark">
           <a className="navbar-brand" href="#!">Owner Panel</a>
           <button
@@ -411,12 +412,8 @@ const OwnerHome = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1rNuFRQJ0m9EkNrwaJtyxCSEfY7Rz35rC_g&s"
-                  alt=""
-                  width="40px"
-                  className="m-0"
-                />
+                 <UserCircle size={32}  />
+
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
@@ -433,7 +430,7 @@ const OwnerHome = () => {
           </div>
         </div>
       </nav>
-      <div className="dynamic-content bg-secondary bg-opacity-25 min-vh-100 m-0 p-0">{renderContent()}</div>
+      <div className="dynamic-content bg-secondary bg-opacity-25 min-vh-100 m-0 p-5">{renderContent()}</div>
     </div>
   );
 };

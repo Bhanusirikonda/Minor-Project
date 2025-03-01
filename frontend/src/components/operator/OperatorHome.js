@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { resetState } from '../redux/slices/operatorSlice';
-
+import { User, UserCircle } from "lucide-react";
 
 const OperatorHome = () => {
 
@@ -85,33 +85,7 @@ const OperatorHome = () => {
     console.log(attendanceData)
   };
 
-  // const fetchAttendance = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     setError("");
-
-  //     const token = localStorage.getItem("token"); // Authentication token
-  //     const res = await axios.post(
-  //       "http://localhost:4000/operator-api/fetchattendance",
-  //       {
-  //         year,
-  //         month,
-  //         empList, // Employee list to identify corresponding employees
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`, // Add token in headers
-  //         },
-  //       }
-  //     );
-
-  //     setAttendanceSummary(res.data); // Update state with attendance data
-  //   } catch (err) {
-  //     setError(err.response?.data?.message || "Failed to fetch attendance");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+ 
   const handleLogout = () => {
        
     localStorage.removeItem('token');
@@ -126,84 +100,10 @@ const OperatorHome = () => {
     if (activeTab === 'dashboard') {
       return <h2>Welcome {currentOperator.name}</h2>;
     }
-    // if(activeTab==='AttendanceSummary'){
-    //   return (
-    //     <div>
-    //   <h3>Attendance</h3>
-    //   <div className="d-flex align-items-center mb-3">
-    //     <label htmlFor="year" className="me-2">
-    //       Select Year:
-    //     </label>
-    //     <input
-    //       type="number"
-    //       id="year"
-    //       value={year}
-    //       onChange={(e) => setYear(e.target.value)}
-    //       className="form-control me-3"
-    //       style={{ width: "120px" }}
-    //     />
-    //     <label htmlFor="month" className="me-2">
-    //       Select Month:
-    //     </label>
-    //     <select
-    //       id="month"
-    //       value={month}
-    //       onChange={(e) => setMonth(e.target.value)}
-    //       className="form-select"
-    //       style={{ width: "150px" }}
-    //     >
-    //       {[...Array(12)].map((_, index) => (
-    //         <option key={index + 1} value={index + 1}>
-    //           {new Date(0, index).toLocaleString("default", { month: "long" })}
-    //         </option>
-    //       ))}
-    //     </select>
-    //     <button onClick={fetchAttendance} className="btn btn-primary ms-3">
-    //       Fetch Attendance
-    //     </button>
-    //   </div>
-
-    //   {isLoading && <p>Loading...</p>}
-    //   {error && <p className="text-danger">{error}</p>}
-
-    //   {!isLoading && AttendanceSummary.length > 0 && (
-    //     <div className="table-responsive">
-    //       <table className="table table-striped table-hover">
-    //         <thead className="table-primary">
-    //           <tr>
-    //             <th>Employee ID</th>
-    //             <th>Date</th>
-    //             <th>Status</th>
-    //           </tr>
-    //         </thead>
-    //         {AttendanceSummary.map((recordArray, index) => (
-    //             <tbody key={index}>
-    //               {recordArray.map((record, idx) => (
-    //                 <tr key={idx}>
-    //                   <td>{record.id}</td>
-    //                   <td>{record.date}</td>
-    //                   <td>{record.status}</td>
-    //                 </tr>
-    //               ))}
-    //             </tbody>
-    //           ))}
-
-    //       </table>
-    //     </div>
-    //   )}
-
-    //   {!isLoading  && AttendanceSummary.length === 0 && (
-    //     <p>No attendance data found for the selected month and year.</p>
-    //   )}
-    // </div>
-      
-    //   )
-    // }
 
     if (activeTab === 'attendance') {
       return (
-        <div className="container mt-4">
-      <h2>Employee Attendance</h2>
+        <div className=" mt-4">
       
       <div className="d-flex align-items-center mb-3">
         <label className="me-2">Select Year:</label>
@@ -297,9 +197,9 @@ const OperatorHome = () => {
   };
 
   return (
-    <div className="container ">
+    <div >
       {/* Navigation Bar */}
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav className="navbar navbar-expand-lg navbar-light m-0 pr-3">
         <div className="container-fluid text-dark">
           <a className="navbar-brand" href="#">Operator Panel</a>
           <button
@@ -331,14 +231,7 @@ const OperatorHome = () => {
                   Employee Attendance
                 </button>
               </li>
-              {/* <li className="nav-item">
-                <button
-                  className={`nav-link btn ${activeTab === 'AttendanceSummary' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('AttendanceSummary')}
-                >
-                  Employee Attendance
-                </button>
-              </li> */}
+              
             </ul>
 
             <ul className="nav-item dropdown">
@@ -350,14 +243,10 @@ const OperatorHome = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1rNuFRQJ0m9EkNrwaJtyxCSEfY7Rz35rC_g&s"
-                  alt=""
-                  width='40px'
-                  className='m-0'
-                />
+                        <UserCircle size={32}  />
+
               </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown" >
                 <li>
                   <Link className="dropdown-item">Change password</Link>
                 </li>
@@ -374,7 +263,7 @@ const OperatorHome = () => {
       </nav>
 
       {/* Dynamic Content Rendering */}
-      <div className="dynamic-content">
+      <div className="dynamic-content min-vh-100 bg-secondary bg-opacity-25 m-0 p-5">
         {renderContent()}
       </div>
     </div>

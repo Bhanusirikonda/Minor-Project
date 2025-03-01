@@ -49,7 +49,7 @@ const AdminHome = () => {
     }
     if (activeTab === "registration") {
       return (
-        <form className="mt-3" onSubmit={handleSubmit(onRegistration)}>
+        <form className="mt-3 w-50 m-auto" onSubmit={handleSubmit(onRegistration)}>
           <h4>Register a New Owner</h4>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">Name</label>
@@ -62,15 +62,6 @@ const AdminHome = () => {
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Email</label>
             <input type="email" id="email" className="form-control" placeholder="Enter email" required {...register("email")} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Cluster</label>
-            <select className="form-select" {...register("cluster", { required: "Cluster is required" })}>
-              <option value="" disabled selected>Select Cluster</option>
-              <option value="cluster 1">1</option>
-              <option value="cluster 2">2</option>
-              <option value="cluster 3">3</option>
-            </select>
           </div>
           <div className="mb-3">
             <label htmlFor="password" className="form-label">Password</label>
@@ -91,8 +82,6 @@ const AdminHome = () => {
                   <th>Name</th>
                   <th>Id</th>
                   <th>Email</th>
-                  <th>Cluster</th>
-                  <th></th>
                 </tr>
               </thead>
 
@@ -102,10 +91,7 @@ const AdminHome = () => {
                     <td>{owner.name}</td>
                     <td>{owner.id}</td>
                     <td>{owner.email}</td>
-                    <td>{owner.cluster}</td>
-                    <td>
-                      <button className="btn btn-danger p-2">Delete</button>
-                    </td>
+                    
                   </tr>
                 ))}
               </tbody>
@@ -118,7 +104,7 @@ const AdminHome = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="">
       <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container-fluid text-dark">
           <a className="navbar-brand" href="#!">Admin Panel</a>
@@ -158,7 +144,7 @@ const AdminHome = () => {
         </div>
       </nav>
 
-      <div className="dynamic-content">{renderContent()}</div>
+      <div className="dynamic-content min-vh-100">{renderContent()}</div>
     </div>
   );
 };

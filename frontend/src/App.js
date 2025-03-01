@@ -26,7 +26,7 @@ function App() {
           <Route path="operatorRegister" element={<OperatorRegister />} />
           <Route path="adminLogin" element={<AdminLogin/>}/>
           </Route>
-        <Route path="adminHome" element={<AdminHome/>}/>
+        <Route path="adminHome" element={<AdminHome/>} />
         <Route path="ownerHome" element={<OwnerHome/>}>
         </Route>
         <Route path="employeeRegistration" element={<EmployeeRegistration/>} />

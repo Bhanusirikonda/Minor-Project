@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import * as XLSX from "xlsx"; // Import xlsx library
 import axios from "axios";
 import "./AdminHome.css"; // Import the custom CSS
+import { User, UserCircle } from "lucide-react";
 
 const AdminHome = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -171,12 +172,12 @@ const AdminHome = () => {
       >
         <div className="p-3 d-flex flex-column min-vh-100">
           <div className="d-flex justify-content-between align-items-center mb-4">
-            <h4 className="text-dark m-0">Admin Panel</h4>
+            <h4 className="text-dark m-0"><UserCircle size={32} className="mb-2" />Admin Panel</h4>
             
             {/* Close Button - only visible on small screens when sidebar is open */}
             {!isLargeScreen && (
               <button
-                className="btn btn-sm btn-outline-dark"
+                className="btn btn-sm btn-outline-danger"
                 onClick={() => setIsSidebarOpen(false)}
                 aria-label="Close navigation"
               >
@@ -222,8 +223,8 @@ const AdminHome = () => {
       <div 
         className="flex-grow-1 p-4" 
         style={{ 
-          marginLeft: isLargeScreen ? '300px' : '10px',
-          width: isLargeScreen ? 'calc(100% - 250px)' : '100%',
+          marginLeft: isLargeScreen ? '10px' : '10px',
+          width: isLargeScreen ? 'calc(100% - 300px)' : '100%',
           transition: 'margin 0.3s ease-in-out'
         }}
       >

@@ -28,6 +28,9 @@ const OwnerHome = () => {
   const dispatch = useDispatch();
 
   const { currentOwner, loginOwnerStatus } = useSelector((state) => state.ownerLoginReducer);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+
   const [activeTab, setActiveTab] = useState(
     localStorage.getItem('activeTab') || 'dashboard'
   );
@@ -63,6 +66,23 @@ const OwnerHome = () => {
   useEffect(() => {
     localStorage.setItem('empList', JSON.stringify(empList));
   }, [empList]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const largeScreen = window.innerWidth >= 992;
+      setIsLargeScreen(largeScreen);
+      
+      // If transitioning to large screen, ensure sidebar is open
+      if (largeScreen) {
+        setIsSidebarOpen(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Check on initial load
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const fetchEmployees = async (data) => {
     try {
@@ -248,9 +268,9 @@ const OwnerHome = () => {
               <button type="submit" className="btn btn-primary">Fetch Details</button>
             </div>
          </form>
-        {empList.length>0 && (<div className="table-responsive">
+        {empList.length>0 && (<div >
           <h4 className="mb-3">Employee Details</h4>
-              <div className="" style={{ maxHeight: '500px', overflowX: 'auto' }}>
+              <div className="" style={{ maxHeight: '600px', overflowX: 'auto' }}>
                 <table ref={tableRef} className="table table-responsive table-striped table-hover table-light border-dark text-center" style={{ tableLayout: "fixed", width: "100%" }}>
                   {/* Sticky Table Header */}
                   <thead className="table-primary" style={{ position: 'sticky', top: 0 ,zIndex: 2 }}>
@@ -343,77 +363,113 @@ const OwnerHome = () => {
   };
 
   return (
-    <div className="  bg-opacity-25 ">
-      <nav className="navbar navbar-expand-lg navbar-light m-0 pr-3">
-        <div className="container-fluid text-dark">
-          <a className="navbar-brand" href="#!">Owner Panel</a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <button
-                  className={`nav-link btn ${activeTab === 'dashboard' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('dashboard')}
-                >
-                  Dashboard
-                </button>
-              </li>
-              <li className="nav-item">
-                <button
-                  className={`nav-link btn ${activeTab === 'registration' ? 'active' : ''}`}
-                  onClick={() => navigate('/employeeRegistration')}
-                >
-                  Employee Registration
-                </button>
-              </li>
+    <div className="d-flex min-vh-100">
+      {/* Toggle Button for Sidebar - only visible on small screens when sidebar is closed */}
+      {!isLargeScreen && !isSidebarOpen && (
+        <button
+          className="btn btn-light position-absolute m-2"
+          onClick={() => setIsSidebarOpen(true)}
+          style={{ zIndex: 1050 }}
+          aria-label="Open navigation"
+        >
+          ☰
+        </button>
+      )}
 
-              <li className="nav-item">
-                <button
-                  className={`nav-link btn ${activeTab === 'details' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('details')}
-                >
-                  Employee Details
-                </button>
-              </li>
-            </ul>
-            <ul className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#!"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+      {/* Sidebar */}
+      <div
+        id="sidebar"
+        className={`bg-light min-vh-100 shadow ${isLargeScreen ? 'd-block' : 'd-block position-fixed'}`}
+        style={{
+          width: '300px',
+          zIndex: 1000,
+          top: isLargeScreen ? 'auto' : '0',
+          left: 0,
+          transition: 'transform 0.3s ease-in-out',
+          transform: isSidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
+          overflowY: 'auto'
+        }}
+      >
+        <div className="p-3 d-flex flex-column h-100">
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h4 className="m-0"><UserCircle size={32} className="mb-2" />Owner Panel</h4>
+            
+            {/* Close Button - only visible on small screens when sidebar is open */}
+            {!isLargeScreen && (
+              <button
+                className="btn btn-sm btn-outline-danger"
+                onClick={() => setIsSidebarOpen(false)}
+                aria-label="Close navigation"
               >
-                 <UserCircle size={32}  />
-
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <Link className="dropdown-item" to="">Change Password</Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <button className="btn btn-danger m-2" onClick={handleLogout}>Logout</button>
-                </li>
-              </ul>
-            </ul>
+                ✕
+              </button>
+            )}
           </div>
+
+          {/* User Profile */}
+          
+          {/* Navigation Links */}
+          <ul className="nav flex-column mb-auto">
+            <li className="nav-item mb-2">
+              <button
+                className={`nav-link btn text-start w-100 ${activeTab === 'dashboard' ? 'active bg-primary text-white' : ''}`}
+                onClick={() => setActiveTab('dashboard')}
+              >
+                Dashboard
+              </button>
+            </li>
+            <li className="nav-item mb-2">
+              <button
+                className={`nav-link btn text-start w-100 ${activeTab === 'registration' ? 'active bg-primary text-white' : ''}`}
+                onClick={() => navigate('/employeeRegistration')}
+              >
+                Employee Registration
+              </button>
+            </li>
+            <li className="nav-item mb-2">
+              <button
+                className={`nav-link btn text-start w-100 ${activeTab === 'details' ? 'active bg-primary text-white' : ''}`}
+                onClick={() => setActiveTab('details')}
+              >
+                Employee Details
+              </button>
+            </li>
+          </ul>
+          
+          {/* Logout Button at Bottom */}
+          <button className="btn btn-danger mt-auto" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
-      </nav>
-      <div className="dynamic-content bg-secondary bg-opacity-25 min-vh-100 m-0 p-5">{renderContent()}</div>
+      </div>
+
+      {/* Overlay for mobile - only when sidebar is open */}
+      {!isLargeScreen && isSidebarOpen && (
+        <div 
+          className="position-fixed" 
+          style={{ 
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.4)', 
+            zIndex: 999 
+          }}
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Content */}
+      <div 
+        className="flex-grow-1 p-4" 
+        style={{ 
+          marginLeft: isLargeScreen ? '10px' : '10px',
+          width: isLargeScreen ? 'calc(100% - 300px)' : '100%',
+          transition: 'margin 0.3s ease-in-out'
+        }}
+      >
+        {renderContent()}
+      </div>
     </div>
   );
 };

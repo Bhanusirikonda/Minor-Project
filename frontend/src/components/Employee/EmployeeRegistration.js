@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import * as XLSX from "xlsx"; // Import xlsx library
+import { useNavigate, Link } from "react-router-dom";
 
 
 const EmployeeRegistration = () => {
@@ -18,6 +19,8 @@ const EmployeeRegistration = () => {
         "Uttar Pradesh": ["Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Ayodhya", "Azamgarh", "Baghpat", "Bahraich"]
       }
   const registrationForm = useForm();
+    const navigate = useNavigate();
+  
   const { register, handleSubmit, formState: { errors }, reset , watch } = useForm();
  const [serviceCenters, setServiceCenters] = useState([]);
   const [selectedCluster,setCluster]=useState('')
@@ -111,7 +114,16 @@ const EmployeeRegistration = () => {
         <div className=" d-flex justify-content-center align-items-center min-vh-100 ">
         <div className="card shadow-lg p-4 border-0 rounded">
       <form onSubmit={registrationForm.handleSubmit(onRegistration)} className="bg-blue p-4 rounded shadow-lg w-100">
-        <h2 className="text-center mb-4">Register a New Employee</h2>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+             <h2 className="text-center mb-4">Register a New Employee</h2>
+            
+              <button
+                className="btn btn-danger"
+                onClick={() => navigate(-1)}
+              >
+                ✕
+              </button>
+          </div>
         
         {/* Employee Details */}
         <div className="row g-3">
@@ -230,19 +242,28 @@ const EmployeeRegistration = () => {
     </div>
     </div>
     <div className="d-flex justify-content-center align-items-center vh-100" >
-      <div className="border border-dashed p-5 text-center bg-light rounded shadow" style={{ width: "50%", minHeight: "200px" }}>
-        <h4 className="mb-3">Upload File</h4>
-        <label className="btn btn-light btn-lg d-block mx-auto rounded-pill px-5 py-3" style={{ cursor: "pointer" }}>
-          Select File
-          <input
-            type="file"
-            accept=".xlsx, .xls"
-            className="d-none"
-            onChange={handleFileChange}
-          />
-        </label>
-        <button className="btn btn-primary m-5" onClick={handleFileUpload}>Upload</button>
-      </div>
+            <div
+          className="border border-dashed p-4 text-center bg-white rounded-lg shadow-sm d-flex flex-column align-items-center justify-content-center"
+          style={{ width: "400px", Height: "250px", borderColor: "#6c757d" }}
+        >
+          <h4 className="mb-3 text-secondary">Upload File</h4>
+
+          <label
+            className="btn btn-outline-primary btn-lg rounded-pill px-4 py-2 mb-3"
+            style={{ cursor: "pointer", transition: "0.3s" }}
+          >
+            📂 Select File
+            <input type="file" accept=".xlsx, .xls" className="d-none" onChange={handleFileChange} />
+          </label>
+
+          <button
+            className="btn btn-primary rounded-pill px-4 py-2"
+            onClick={handleFileUpload}
+            style={{ transition: "0.3s" }}
+          >
+            🚀 Upload
+          </button>
+        </div>
       
     </div>
     </div>

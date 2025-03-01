@@ -133,6 +133,17 @@ const EmployeeProfile = () => {
               />
             </div>
             <div className="col-md-6">
+              <strong>Basic</strong>
+              <input
+                type="number"
+                name="basic"
+                value={formData.basic}
+                onChange={handleChange}
+                className="form-control"
+                disabled={!isEditing}
+              />
+            </div>
+            <div className="col-md-6">
               <strong>Status:</strong>
               <select
                 name="status"

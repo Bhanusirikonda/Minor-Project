@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import * as XLSX from "xlsx"; // Import xlsx library
 
 
-function EmployeeRegistration() {
+const EmployeeRegistration = () => {
     const data={
         "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Nellore", "Prakasam", "Srikakulam", "Visakhapatnam"],
         "Bihar": ["Araria", "Aurangabad", "Begusarai", "Bhagalpur", "Bhojpur", "Darbhanga", "Gaya", "Muzaffarpur", "Patna", "Purnia"],

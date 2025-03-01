@@ -35,7 +35,6 @@ const OwnerHome = () => {
     JSON.parse(localStorage.getItem('empList')) || []
   );
 
-  const registrationForm = useForm();
   const detailsForm = useForm();
   const tableRef = useRef(null); // ✅ Define the table reference
 
@@ -87,23 +86,7 @@ const OwnerHome = () => {
     navigate('/ownerLogin');
   };
 
-  const onRegistration = async (empObj) => {
-    try {
-      const res = await axios.post('http://localhost:4000/owner-api/addemployee', empObj, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-
-      if (res.data.message === 'Employee registration success') {
-        fetchEmployees(); // Refresh the employee list
-        reset(); // Reset form fields
-      }
-      alert(res.data.message)
-    } catch (error) {
-      alert('Error registering employee:', error);
-    }
-  };
+ 
 
   const exportToExcel = () => {
     const table = tableRef.current;

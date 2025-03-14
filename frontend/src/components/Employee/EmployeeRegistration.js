@@ -234,6 +234,55 @@ const EmployeeRegistration = () => {
             <input type="number" className="form-control" placeholder="Enter Basic" {...registrationForm.register("basic", { required: "Basic Salary is required" })} />
             {errors.basic && <div className="text-danger">{errors.basic.message}</div>}
           </div>
+          <div className="col-md-3">
+              <label className="form-label">PF</label>
+              <div className="d-flex gap-3">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    value="yes"
+                    {...registrationForm.register("pf", { required: "PF selection is required" })}
+                  />
+                  <label className="form-check-label">Yes</label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    value="no"
+                    {...registrationForm.register("pf", { required: "PF selection is required" })}
+                  />
+                  <label className="form-check-label">No</label>
+                </div>
+              </div>
+              {errors.pf && <div className="text-danger">{errors.pf.message}</div>}
+            </div>
+
+            <div className="col-md-3">
+              <label className="form-label">ESIC</label>
+              <div className="d-flex gap-3">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    value="yes"
+                    {...registrationForm.register("esic", { required: "ESIC selection is required" })}
+                  />
+                  <label className="form-check-label">Yes</label>
+                </div>
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    value="no"
+                    {...registrationForm.register("esic", { required: "ESIC selection is required" })}
+                  />
+                  <label className="form-check-label">No</label>
+                </div>
+              </div>
+              {errors.esic && <div className="text-danger">{errors.esic.message}</div>}
+            </div>
         </div>
         
         {/* Submit Button */}

@@ -160,7 +160,15 @@ const OwnerHome = () => {
             </li>
             <li className="nav-item mb-2">
               <button
-                className={`nav-link btn text-start w-100 ${activeTab === 'details' ? 'active bg-primary text-white' : ''}`}
+                className={`nav-link btn text-start w-100 ${activeTab === 'employeesalarydetails' ? 'active bg-primary text-white' : ''}`}
+                onClick={() => navigate('/employeesalaryDetails')}
+              >
+                Employee Salary Details
+              </button>
+            </li>
+            <li className="nav-item mb-2">
+              <button
+                className={`nav-link btn text-start w-100 ${activeTab === 'employeedetails' ? 'active bg-primary text-white' : ''}`}
                 onClick={() => navigate('/employeeDetails')}
               >
                 Employee Details

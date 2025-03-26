@@ -42,7 +42,7 @@ ownerApp.post('/login',expressAsyncHandler(async(req,res)=>{
 }))
 
 
-ownerApp.post('/employeedetails/', async(req,res)=>{
+ownerApp.post('/employeesalarydetails/', async(req,res)=>{
     let params=req.body
     let cluster=params.cluster
     let serviceCenter=params.serviceCenter
@@ -119,14 +119,22 @@ ownerApp.put('/employees/:id', async (req, res) => {
 });
 
   
-ownerApp.delete('/deleteemployee',async(req,res)=>{
-    const opCred=req.body
-    let result= await empCollection.deleteOne({id:opCred.id})
-    if(result.acknowledged===true){
-        res.send({message:"deleted successfully"})
-    }else{
-        res.send({message:"not deleted"})
-    }
+ownerApp.post('/employeedetails',async(req,res)=>{
+    let params=req.body
+    let cluster=params.cluster
+    let serviceCenter=params.serviceCenter
+    let type=params.type
+    let status=params.status
+    let query = {};
+
+    if (cluster) query.cluster = cluster;
+    if (serviceCenter) query.serviceCenter = serviceCenter;
+    if (type) query.type = type;
+    if (status!="all") query.status = status;
+    let month=params.month
+    let year=params.year
+    const empList = await empCollection.find(query).toArray();
+    res.send({message : "employee details ",payload : empList})
 })
 
 

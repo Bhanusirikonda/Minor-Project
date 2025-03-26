@@ -12,10 +12,10 @@ app.use(exp.static(path.join(__dirname,'../frontend/build')))
 
 mongoClient.connect(process.env.DB_URL)
 .then(async(client)=>{
-    const ahsrmservices = client.db('ahsrmservicesdb')
-    const ownerCollection = ahsrmservices.collection('ownerCollection')
-    const empCollection = ahsrmservices.collection('empCollection')
-    const employeeAttendance=ahsrmservices.collection('employeeAttendance')
+    const ashrmservices = client.db('ashrmservices')
+    const ownerCollection = ashrmservices.collection('OwnerCollection')
+    const empCollection = ashrmservices.collection('EmpCollection')
+    const employeeAttendance=ashrmservices.collection('EmployeeAttendance')
     await employeeAttendance.createIndex(
         {id: 1, month: 1 ,year: 1},
         { unique: true }

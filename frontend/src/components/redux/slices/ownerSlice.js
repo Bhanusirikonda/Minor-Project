@@ -7,7 +7,7 @@ export const ownerLoginThunk = createAsyncThunk(
   async (ownerCredObj, thunkApi) => {
     try {
       const res = await axios.post(
-        "http://localhost:4000/owner-api/login",
+        "https://ashrmservices.onrender.com/owner-api/login",
         ownerCredObj
       );
       if (res.data.message === "Login success") {

@@ -42,7 +42,7 @@ const AdminHome = () => {
   // Handle form submission
   async function onRegistration(ownerObj) {
     let result = await axios.post(
-      "http://localhost:4000/admin-api/ownerregistration",
+      "https://ashrmservices.onrender.com/admin-api/ownerregistration",
       ownerObj
     );
 
@@ -55,7 +55,7 @@ const AdminHome = () => {
   }
 
   async function getOwners() {
-    let res = await axios.get("http://localhost:4000/admin-api/owners");
+    let res = await axios.get("https://ashrmservices.onrender.com/admin-api/owners");
     setOwnersList(res.data.payload);
   }
 

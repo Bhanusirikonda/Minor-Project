@@ -7,7 +7,7 @@ export const operatorLoginThunk = createAsyncThunk(
   async (operatorCredObj, thunkApi) => {
     try {
       const res = await axios.post(
-        "http://localhost:4000/operator-api/login",
+        "https://ashrmservices.onrender.com/operator-api/login",
         operatorCredObj
       );
       if (res.data.message === "login success") {

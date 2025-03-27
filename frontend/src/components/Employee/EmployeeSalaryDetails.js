@@ -47,7 +47,7 @@ function EmployeeSalaryDetails() {
 
     const fetchEmployees = async (data) => {
     try {
-      const res = await axios.post('http://localhost:4000/owner-api/employeesalarydetails/',data, {
+      const res = await axios.post('https://ashrmservices.onrender.com/owner-api/employeesalarydetails/',data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`, // Pass token for authentication
         },

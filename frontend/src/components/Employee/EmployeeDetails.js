@@ -47,7 +47,7 @@ function EmployeeDetails() {
 
     const fetchEmployees = async (data) => {
     try {
-      const res = await axios.post('http://localhost:4000/owner-api/employeedetails/',data, {
+      const res = await axios.post('https://ashrmservices.onrender.com/owner-api/employeedetails/',data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`, // Pass token for authentication
         },

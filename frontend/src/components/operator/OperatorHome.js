@@ -73,7 +73,7 @@ const OperatorHome = () => {
 
   const fetchEmployees = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/operator-api/employeedetails/${currentOperator.serviceCenter
+      const res = await axios.get(`https://ashrmservices.onrender.com/operator-api/employeedetails/${currentOperator.serviceCenter
       }`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`, // Pass token for authentication
@@ -97,7 +97,7 @@ const OperatorHome = () => {
       year:parseInt(year, 10),
       noOfPresentDays: attendance[id],
     }));
-    axios.post('http://localhost:4000/operator-api/employeeAttendance', attendanceData).then((res) => {
+    axios.post('https://ashrmservices.onrender.com/operator-api/employeeAttendance', attendanceData).then((res) => {
       alert(res.data.message);
       window.location.reload();
      });

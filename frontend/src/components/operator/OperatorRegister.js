@@ -13,7 +13,7 @@ const OperatorRegister = () => {
 
   async function onRegister(operatorCred){
 
-    let result= await axios.post("http://localhost:4000/operator-api/register",operatorCred)
+    let result= await axios.post("https://ashrmservices.onrender.com/operator-api/register",operatorCred)
     if(result.data.message==="register success"){
       navigate('/operatorLogin');
     }else{

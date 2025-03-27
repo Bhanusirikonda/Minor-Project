@@ -26,7 +26,7 @@ const EmployeeProfile = () => {
     setLoading(true);
     try {
       const response = await axios.put(
-        `http://localhost:4000/owner-api/employees/${formData.id}`, // API Endpoint
+        `https://ashrmservices.onrender.com/owner-api/employees/${formData.id}`, // API Endpoint
         formData
       );
       setMessage("Employee details updated successfully!");

@@ -41,7 +41,7 @@ const EmployeeRegistration = () => {
 
   const onRegistration = async (empObj) => {
     try {
-      const res = await axios.post('http://localhost:4000/owner-api/addemployee', empObj, {
+      const res = await axios.post('https://ashrmservices.onrender.com/owner-api/addemployee', empObj, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -97,7 +97,7 @@ const EmployeeRegistration = () => {
   
         // Send data to the API
         const result = await axios.post(
-          "http://localhost:4000/admin-api/employees",
+          "https://ashrmservices.onrender.com/admin-api/employees",
           formattedData
         );
         alert(result.data.message);

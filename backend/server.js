@@ -1,15 +1,9 @@
 
 const exp = require('express')
-const cors = require("cors");
+
 
 const app = exp();
 
-// Allow requests from frontend (Change port if needed)
-app.use(cors({
-    origin: ["http://localhost:4000", "https://ashrm-services.onrender.com"], // Add your deployed frontend URL here
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true, // Allow cookies if needed
-}));
 
 require('dotenv').config()
 const path=require('path')
